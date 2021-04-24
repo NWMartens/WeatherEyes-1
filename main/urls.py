@@ -8,4 +8,5 @@ urlpatterns = [
     path("prior_forecast/", views.prior_forecast, name="prior forecast"),
     path("observational_inquiry/", views.observational_inquiry, name="observational inquiry"),
     path("preferences/", views.preferences, name="preferences"),
+    path('image/',views.image, name = 'image')
 ]

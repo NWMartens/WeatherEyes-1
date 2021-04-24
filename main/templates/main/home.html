@@ -6,30 +6,13 @@
     <meta charset="UTF-8">
     <title>WeatherEyes</title>
 </head>
+
 <body>
         {% block content %}
-            <h1>Weather Eyes Homepage</h1>
             {% if user.is_authenticated %}
                 <h2>Welcome, {{ user.username}}!</h2>
-                <h1>Your Weather Data</h1>
                 <p>insert customized weather data here?</p>
                 <p><a href="{% url 'logout' %}">Log Out</a></p>
-
-                <form action="/action_page.php">
-                  <label for="weather data">Choose a weather option:</label>
-                  <select name="weather data" id="weather data">
-                    <optgroup label="Past Information">
-                      <option value="Weather Observations">Weather Observations</option>
-                      <option value="Prior Forecasts">Prior Forecasts</option>
-                    </optgroup>
-                    <optgroup label="Current Forecast">
-                      <option value="Hourly">Hourly</option>
-                      <option value="Daily">Daily</option>
-                    </optgroup>
-                  </select>
-                  <br><br>
-                  <input type="submit" value="Submit">
-                </form>
 
                 <body>
                     <p> </p>
