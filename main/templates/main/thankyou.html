@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <h1>Your preferences have been saved!</h1>
+  </head>
+  <body>
+    {% block content %}
+       {% if user.is_authenticated %}
+          Thank you!
+          Your preferences are:
+          <p><strong>Type of Data:</strong> {{ datatype }}</p>
+          <p><strong>Service Provider:</strong> {{ ServiceProvider }}</p>
+          <p><strong>Time Frame:</strong> {{ HRorDAY }}</p>
+          <p><strong>Unit of Measurement:</strong> {{ Munits }}</p>
+          <p><strong>Temperature Unit:</strong> {{ TempUnit }}</p>
+
+          <form action="/home">
+          <input type="submit" value="Return to homepage">
+         </form>
+        {% else %}
+            <a href="/login">Please login here to view the site.</a>
+
+    {% endif %}
+  {% endblock %}

@@ -10,75 +10,23 @@
   {% block content %}
     {% if user.is_authenticated %}
             <h1>Preferences</h1>
+
               <p> Please respond to the following questions to provide your preferences.</p>
 
-                <body>
-              <div id="DataType" name = "DataType">
-                <p>After you have signed in, what type of weather data would you like to be displayed on the homepage?</p>
-                <button value = 'Historic' onclick="myFunction('DataType', 'Historic');store('DataType', 'Historic')">Weather Observations</button>
-                <button value = 'PriorForecast' onclick="myFunction('DataType', 'Service Provider');store('DataType', 'PriorForecast')">Prior Weather Forecasts</button>
-                <button value = 'Forecast'onclick="myFunction('DataType', 'Service Provider');store('DataType', 'Forecast')">Weather Forecasts</button>
-              </div>
-              <div id="Historic" name = "HRorDLY" style="display: none;">
-                <p>You have selected "Weather Observations"</p>
-                <p>Would you like the most recently collected 24-hour observations or 10-day observations?</p>
-                <button value = 'Hourly' onclick="myFunction('Historic', 'Measurement');store('HRorDLY', 'Hourly')">24-Hour</button>
-                <button value = 'Daily' onclick="myFunction('Historic', 'Measurement');store('HRorDLY', 'Daily')">10-Day</button>
-              </div>
-              <div id="Time Range 1" name = "HRorDLY" style="display: none;">
-               <p>Would you like the most recently collected 24-hour data or 10-day data?</p>
-                <button value = 'Hourly' onclick="myFunction('Time Range 1', 'Measurement');store('HRorDLY', 'Hourly')">24-Hour</button>
-                <button value = 'Daily' onclick="myFunction('Time Range 1', 'Measurement');store('HRorDLY', 'Daily')">10-Day</button>
-              </div>
+            <div class="container" id="user_preferences">
+            <form method = 'post' action = '/preferences/'>
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type = 'submit', name = 'save'> Save </button>
+              <button type="reset">Reset</button>
+            </form>
 
-              <div id="Service Provider" name = "Service" style="display: none;">
-               <p>Which weather service provider would you like the data from?</p>
-                <button value = "NatWeatherServ" onclick="myFunction('Service Provider', 'NatWeatherServ');store('Service Provider', 'NatWeatheServ')">National Weather Service</button>
-                <button value = "AccuWeather" onclick="myFunction('Service Provider', 'Time Range 1');store('Service Provider', 'AccuWeather')">AccuWeather</button>
-                <button value = "WeatherCom" onclick="myFunction('Service Provider', 'Time Range 1');store('Service Provider', 'WeatherCom')">Weather.com</button>
-              </div>
-              <div id="NatWeatherServ" name = "HRorDLY" style="display: none;">
-                <p>You have clicked "National Weather Service"</p>
-               <p>Would you like the most recently collected 24-hour forecast data or 7-day forecast data?</p>
-                <button value = 'Hourly' onclick="myFunction('NatWeatherServ', 'Measurement');store('HRorDLY', 'Hourly')">24-Hour</button>
-                <button value = 'Daily' onclick="myFunction('NatWeatherServ', 'Measurement');store('HRorDLY', 'Daily')">7-Day</button>
-              </div>
-              <div id="Measurement" name = "Measurement" style="display: none;">
-               <p>Would you like precipitation accumulation data to be presented in millimeters or inches?</p>
-                <button value = 'millimeters' onclick="myFunction('Measurement', 'Temperature');store('Measurement', 'Millimeters')">Millimeters</button>
-                <button value = 'inches' onclick="myFunction('Measurement', 'Temperature');store('Measurement', 'Inches')">Inches</button>
-              </div>
-              <div id="Temperature" name = "Temperature" style="display: none;">
-               <p>Would you like temperature data to be presented in Farenheit, Celsius, or Kelvin?</p>
-                <button value = "TempF" onclick="myFunction('Temperature', 'Thank You');store('Temperature', 'TempF')">Farenheit</button>
-                <button value = "TempC" onclick="myFunction('Temperature', 'Thank You');store('Temperature', 'TempC')">Celsius</button>
-                <button value = "TempK" onclick="myFunction('Temperature', 'Thank You');store('Temperature', 'TempK')">Kelvin</button>
-              </div>
-              <div id="Thank You" style="display: none;">
-                <p>Your preferences have been saved, thank you. </p>
-              </div>
-
-              <script type="text/javascript">
-                function myFunction (hide, show) {
-                  document.getElementById(hide).style.display = "none";
-                  document.getElementById(show).style.display = "block";
-                }
-              </script>
-              <script type="text/javascript">
-                var answers = []
-                function store (name, value) {
-                  key = name
-                  value = value
-                  var dict = {key:value}
-                  var answers.push(dict)
-                }
-              </script>
-            </body>
-            <br><br>
+            <p></p>
             <form action="/home">
               <input type="submit" value="Return to homepage">
             </form>
-            </html>
+            <p> {{ datatype }}</p>
+            </div>
 
         {% else %}
             <a href="/login">Please login here to view the site.</a>

@@ -24,7 +24,7 @@ urlpatterns = [
     #path('login/', v.login, name='login'), #Note: This is commented out, because the django app creates it's own login pathway by default. If we include this, it will overwrite the the default django login.
     path('preferences/', include("main.urls"), name='preferences'),
     path('home/', include("main.urls"), name='home'),
-    path('future_forecast/', include("main.urls"), name='future forecast'),
+    path('current_forecast/', include("main.urls"), name='current forecast'),
     path('observational_inquiry/', include("main.urls"), name='observational inquiry'),
     path('', include("django.contrib.auth.urls")),
 ]
