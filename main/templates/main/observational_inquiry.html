@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Observational Inquiry</title>
+</head>
+<body>
+    {% block content %}
+        {% if user.is_authenticated %}
+            <h1>Observational Inquiry</h1>
+            <p>
+                Please enter below whether you wish to make an inquiry into hourly information or daily information?
+            </p>
+            <form action = "/storeval">
+                <label for="timetype">Choose hourly or daily</label>
+                <select name = " timetype " id = " timetype ">
+                <option value = "hourly">Hourly</option>
+                <option value = "daily">Daily</option>
+                </select>
+                <br><br>
+            </form>
+            <p>
+                Please enter the date or range of dates you would like to return weather data for (Jan 01 2021 - Jan 01 2022 format). If you want to inquire into a single date please select single. If you want to inquire into a range of observational data please select range. Additionally, please note that the earliest date you can inquire into is Jan 01 2019
+            </p>
+            <form action = "/storeval">
+                <label for="inqtype">Choose single or range</label>
+                <select name = "inqtype" id = "inqtype">
+                <option value = "hourly">Single</option>
+                <option value = "daily">Range</option>
+                </select>
+                <br><br>
+            </form>
+            <p>
+            <form action = "/storeval">
+                <label for="start">Start date:</label>
+                <input type="date" id="start" name="start"
+                   value="2021-04-18"
+                   min="2019-01-01">
+            </form>
+            <form action = "/storeval">
+                <label for="start">End date:</label>
+                <input type="date" id="start" name="start"
+                   value="2021-04-18"
+                   min="2019-01-01">
+            </form>
+
+            <button type="button">Submit</button>
+            <button type="button">Return to homepage</button>
+
+        {% else %}
+            <a href="/login">Please login here to view the site.</a>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>

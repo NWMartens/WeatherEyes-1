@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WeatherEyes</title>
+</head>
+<body>
+        {% block content %}
+            <h1>Past Forecasts Page</h1>
+            {% if user.is_authenticated %}
+              <p>Welcome to Prior Forecasts, (part) of a website developed by Devon!</p>
+              <p>To view prior forecasts, you will need to choose several different options below.  There are options for weather service provider (Accuweather, National Weather Service, and Weather.com), hourly or 10-day forecast information, a date to start your inquiry from, and time parameters.  Have fun looking at forecast data!</p>
+              <p></p>
+
+              <div class="container" id="forecast_parameters">
+                <form method="post">
+
+                  {% csrf_token %}
+
+                  {{ form.as_ul }}
+                  <button type="submit">Submit</button>
+                  <button type="reset">Reset</button>
+                </form>
+                <p> {{ provider }}</p>
+                <p>{{ inquiry_type }}</p>
+                <p>{{ start_date }}</p>
+                <p>{{ start_time }}</p>
+                <p>{{ AM_or_PM }}</p>
+
+              </div>
+            {% else %}
+                <a href="/login">Please login here to view the site.</a>
+            {% endif %}
+        {% endblock %}
+
+
+</body>
+</html>

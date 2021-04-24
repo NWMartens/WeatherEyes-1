@@ -1,0 +1,73 @@
+{% extends 'main/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Future Forecast</title>
+</head>
+<body>
+    {% block content %}
+        {% if user.is_authenticated %}
+            <h1>Future Forecast</h1>
+            <section>
+                <h2>
+                    <p> The Weather Channel </p>
+                </h2>
+                <fieldset>
+                    <legend>weather.com</legend>
+                    <p>I </p>
+                    <p> hi</p>
+                    <p>dfdf</p>
+                    <p>dfds</p>
+                    <p>sdgfs</p>
+                </fieldset>
+            </section>
+
+            <section>
+                <h2>
+                    <p> AccuWeather </p>
+                </h2>
+                <fieldset>
+                    <legend>accuweather.com</legend>
+                    <p>I </p>
+                    <p> hi</p>
+                    <p>dfdf</p>
+                    <p>dfds</p>
+                    <p>sdgfs</p>
+                </fieldset>
+            </section>
+
+            <section>
+                <h2>
+                    <p> National Weather Service </p>
+                </h2>
+                <fieldset>
+                    <legend>www.weather.gov</legend>
+                    <p>I </p>
+                    <p> hi</p>
+                    <p>dfdf</p>
+                    <p>dfds</p>
+                    <p>sdgfs</p>
+                </fieldset>
+            </section>
+
+
+            <ul>
+                <li>
+                    The first item of the future forecast
+                </li>
+                <li>
+                    The second item
+                </li>
+                <li>
+                    The third item
+                </li>
+            </ul>
+
+        {% else %}
+            <a href="/login">Please login here to view the site.</a>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
