@@ -1,0 +1,62 @@
+{% extends 'main/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Observational Inquiry</title>
+</head>
+<body>
+  {% block content %}
+    {% if user.is_authenticated %}
+    <h1>Observational Inquiry</h1>
+      {% if HRorDAY == 'Daily' %}
+        {% if range_choice == 'Single day' %}
+          <h6> Date: {{data.Date}}</h6>
+          <p>High Temp: {{data.High}} </p>
+          <p>Low Temp: {{data.Low}} </p>
+          <p>Rainfall: {{data.Rainfall}} </p>
+          <p>Snowfall: {{data.Snowfall}} </p>
+          <br>
+        <!-- Webreturn = {"Date" : WDate , "High" : High , "Low" : Low , "Rainfall" : Rain , "Snowfall" : Snow} -->
+        {% else %}
+          <h6> Date period: {{data.Start}} - {{data.End}} </h6>
+          <p>MaxTemp: {{data.MaxTemp}} </p>
+          <p>MinTemp: {{data.MinTemp}} </p>
+          <p>Total Rainfall: {{data.Rainfall}} </p>
+          <p>Total Snowfall: {{data.Snowfall}} </p>
+          <br>
+        <!-- Webreturn = {"Start" : start , "End" : end , "MaxTemp" : high , "MinTemp" : low , "Snowfall" : Totalsnow , "Rainfall" : Totalrain} -->
+        {% endif %}
+        
+        
+      {% elif HRorDAY == 'Hourly' %}
+        {% if range_choice == 'Single day' %}
+          <h6> Date/Hour: {{data.Date}}</h6>
+          <p>Temp: {{data.Temp}} </p>
+          <p>Precipitation: {{data.Precipitation}} </p>
+          <br>
+        <!-- Webreturn = {"Date" : time_per , "Temp" : Temp , "Precipitation" : Precip} -->
+        {% else %}
+          <h6> Date period: {{data.Start}} - {{data.End}} </h6>
+          <p>MaxTemp: {{data.MaxTemp}} </p>
+          <p>MinTemp: {{data.MinTemp}} </p>
+          <p>Total Rainfall: {{data.Rainfall}} </p>
+          <br>
+        <!-- Webreturn = {"Start" : start , "End" : end , "MaxTemp" : high , "MinTemp" : low , "Rainfall" : Totalrain} -->
+        {% endif %}
+      
+      {% endif %}
+      <!-- <p>{{ HRorDAY }}</p>
+        <p>{{ range_choice }}</p>
+        <p>{{ start_date }}</p>
+        <p>{{ end_date }}</p> -->
+      
+
+    {% else %}
+      <a href="/login">Please login here to view the site.</a>
+
+    {% endif %}
+  {% endblock %}
+</body>
+</html>

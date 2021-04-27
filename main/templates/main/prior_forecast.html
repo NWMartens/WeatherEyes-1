@@ -4,35 +4,105 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>WeatherEyes</title>
+    <title>Prior Forecasts Page</title>
 </head>
 <body>
-        {% block content %}
+  {% block content %}
+    {% if user.is_authenticated %}
             <h1>Prior Forecasts Page</h1>
-            {% if user.is_authenticated %}
-             <p>Welcome to Prior Forecasts, (part) of a website developed by Devon!</p>
+
+             <p>Welcome to Prior Forecasts, (part) of a website developed by the savvy six Software Engineering protégés!</p>
               <p>To view prior forecasts, you will need to choose several different options below.  There are options for weather service provider (Accuweather, National Weather Service, and Weather.com), hourly or 10-day forecast information, a date to start your inquiry from, and time parameters.  Have fun looking at forecast data!</p>
+              </p>
+              <p>An additional note is that National Weather Service only has 7-day forecasts.  So if you choose that as your provider and you want to look at daily forecasts, don't be shocked to find that you only get the 7 days worth of information.</p>
+            <div class="container" id="prior_forecast">
+            <form method = 'post' action = '/prior_forecast/'>
+              {% csrf_token %}
+              {{ form.as_p }}
+              <p> {{ provider_form }}</p>
+              <p>{{ fre_form }}</p>
+              <p>{{ start_date }}</p>
+              <p>{{ start_time }}</p>
+              <p>{{ am_or_pm_form }}</p>
+
+              {% if data %}
+                  <input type="submit" value="Back"> 
+              {% else %}
+                  <input type="submit" value="Submit">
+              {% endif %}
+
+            </form>
+
             <p></p>
 
-            <div class="container" id="forecast_parameters">
-              <form method="post">
-
-                {% csrf_token %}
-
-                {{ form.as_ul }}
-                <button type="submit">Submit</button>
-                <button type="reset">Reset</button>
-              </form>
-              <p> {{ provider }}</p>
-              <p>{{ inquiry_type }}</p>
-              <p>{{ my_date }}</p>
-              <p>{{ my_time }}</p>
-              
+            <form action="/home">
+              <input type="submit" value="Return to homepage">
+            </form>
             </div>
-  
-            {% endif %}
-        {% endblock %}
 
 
+              <div>
+              {% if provider == AccuWeather %}
+                  {% if datatype == 'Hourly' %}
+                      {% for d in data %}
+                          <h3> Time: {{ d.Hour }} </h3>
+                          <span> Temperature: {{ d.Temperature }} </span><br>
+                          <span> Description: {{ d.Description }} </span><br>
+                          <span> Precipitation Probability: {{ d.Precipitation_Probability }} <span>&#37;</span></span><br>
+                      {% endfor %}
+                  {% else %}
+                      {% for d in data %}
+                          <h3> Date: {{ d.Date }} </h3>
+                          <span> Precipitation Probability: {{ d.Precipitation_Probability }} <span>&#37;</span></span><br>
+                          <span> Description: {{ d.Description }} </span><br>
+                          <span> High Temperature: {{ d.MinTemp }} </span><br>
+                          <span> Low Temperature: {{ d.MaxTemp }} </span><br>
+                      {% endfor %}
+                  {% endif %}
+              {% elif provider == NatWeather %}
+                  {% if datatype == 'Hourly' %}
+                      {% for d in data %}
+                          <h3> Time: {{ d.Hour }} </h3>
+                          <span> Temperature: {{ d.Temperature }} </span><br>
+                          <span> Description: {{ d.Description }} </span><br>
+                          <span> Precipitation Probability: {{ d.Precipitation_Probability }} <span>&#37;</span> </span><br>
+                      {% endfor %}
+                  {% else %}
+                      {% for d in data %}
+                          <h3> Date: {{ d.Date }} </h3>
+                          <span> Precipitation Probability: {{ d.Precipitation_Probability }} <span>&#37;</span> </span><br>
+                          <span> Description: {{ d.Description }} </span><br>
+                          <span> High Temperature: {{ d.MinTemp }} </span><br>
+                          <span> Low Temperature: {{ d.MaxTemp }} </span><br>
+                      {% endfor %}
+                  {% endif %}
+              {% else %}
+                  {% if datatype == 'Hourly' %}
+                      {% for d in data %}
+                          <h3> Time: {{ d.Hour }} </h3>
+                          <span> Temperature: {{ d.Temperature }} </span><br>
+                          <span> Description: {{ d.Description }} </span><br>
+                          <span> Precipitation Probability: {{ d.Precipitation_Probability }} <span>&#37;</span> </span><br>
+                      {% endfor %}
+                  {% else %}
+                      {% for d in data %}
+                          <h3> Date: {{ d.Date }} </h3>
+                          <span> Precipitation Probability: {{ d.Precipitation_Probability }} <span>&#37;</span> </span><br>
+                          <span> Description: {{ d.Description }} </span><br>
+                          <span> High Temperature: {{ d.MinTemp }} </span><br>
+                          <span> Low Temperature: {{ d.MaxTemp }} </span><br>
+                      {% endfor %}
+                  {% endif %}    
+              {% endif %}   
+              
+
+            </div>
+
+
+        {% else %}
+            <a href="/login">Please login here to view the site.</a>
+
+    {% endif %}
+  {% endblock %}
 </body>
 </html>

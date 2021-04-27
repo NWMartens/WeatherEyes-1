@@ -3,69 +3,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+
+
+</style>
     <meta charset="UTF-8">
-    <title>Future Forecast</title>
+    <title>Current Forecast</title>
 </head>
 <body>
+
     {% block content %}
         {% if user.is_authenticated %}
-            <h1>Future Forecast</h1>
-            <section>
-                <h2>
-                    <p> The Weather Channel </p>
-                </h2>
-                <fieldset>
-                    <legend>weather.com</legend>
-                    <p>I </p>
-                    <p> hi</p>
-                    <p>dfdf</p>
-                    <p>dfds</p>
-                    <p>sdgfs</p>
-                </fieldset>
-            </section>
+            <h1>
+      				Current Forecast
+      			</h1>
+            <br>
 
-            <section>
-                <h2>
-                    <p> AccuWeather </p>
-                </h2>
-                <fieldset>
-                    <legend>accuweather.com</legend>
-                    <p>I </p>
-                    <p> hi</p>
-                    <p>dfdf</p>
-                    <p>dfds</p>
-                    <p>sdgfs</p>
-                </fieldset>
-            </section>
+        <div class="row">
+          <div class="col-sm">
+            <h4>
+    					<p> The Weather Channel </p>
+    				</h4>
+            
+            {% if datatype == 'Daily' %}
+            {% for d in WeatherComDailyData %}
+                <h6> Date: {{d.Date}}</h6>
+                <p>Minimum Temp: {{d.MinTemp}} </p>
+                <p>Maximum Temp: {{d.MaxTemp}} </p>
+                <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                <p>Description: {{d.Description}} </p>
+                <br>
+            {% endfor %}
+            {% elif datatype == 'Hourly' %}
+            {% for d in WeatherComHourlyData %}
+                <h6> Hour: {{d.Hour}}</h6>
+                <p>Temperature: {{d.Temperature}} </p>
+                <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                <p>Description: {{d.Description}} </p>
+                <br>
+            {% endfor %}
+            {% endif %}
+          </div>
+          <div class="col-sm">
+            <h4>
+    					<p> AccuWeather </p>
+    				</h4>
+            <!-- {{AccuWeatherDailyData}} -->
+            {% if datatype == 'Daily' %}
+            {% for d in AccuWeatherDailyData %}
+                <h6> Date: {{d.Date}}</h6>
+                <p>Minimum Temp: {{d.MinTemp}} </p>
+                <p>Maximum Temp: {{d.MaxTemp}} </p>
+                <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                <p>Description: {{d.Description}} </p>
+                <br>
+            {% endfor %}
+            {% elif datatype == 'Hourly' %}
+            {% for d in AccuWeatherHourlyData %}
+                <h6> Hour: {{d.Hour}}</h6>
+                <p>Temperature: {{d.Temperature}} </p>
+                <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                <p>Description: {{d.Description}} </p>
+                <br>
+            {% endfor %}
+            {% endif %}
+          </div>
+          <div class="col-sm">
+            <h4>
+    					<p> National Weather Service </p>
+    				</h4>
+            {% if datatype == 'Daily' %}
+            {% for d in NatWeatherDailyData %}
+                <h6> Date: {{d.Date}}</h6>
+                <p>Minimum Temp: {{d.MinTemp}} </p>
+                <p>Maximum Temp: {{d.MaxTemp}} </p>
+                <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                <p>Description: {{d.Description}} </p>
+                <br>
+            {% endfor %}
+            {% elif datatype == 'Hourly' %}
+            {% for d in NatWeatherHourlyData %}
+                <h6> Hour: {{d.Hour}}</h6>
+                <p>Temperature: {{d.Temperature}} </p>
+                <!-- <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p> -->
+                <p>Description: {{d.Description}} </p>
+                <br>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
 
-            <section>
-                <h2>
-                    <p> National Weather Service </p>
-                </h2>
-                <fieldset>
-                    <legend>www.weather.gov</legend>
-                    <p>I </p>
-                    <p> hi</p>
-                    <p>dfdf</p>
-                    <p>dfds</p>
-                    <p>sdgfs</p>
-                </fieldset>
-            </section>
 
-
-            <ul>
-                <li>
-                    The first item of the future forecast
-                </li>
-                <li>
-                    The second item
-                </li>
-                <li>
-                    The third item
-                </li>
-            </ul>
-
-        {% else %}
+        
+      {% else %}
             <a href="/login">Please login here to view the site.</a>
         {% endif %}
     {% endblock %}

@@ -26,5 +26,6 @@ urlpatterns = [
     path('home/', include("main.urls"), name='home'),
     path('current_forecast/', include("main.urls"), name='current forecast'),
     path('observational_inquiry/', include("main.urls"), name='observational inquiry'),
+    path('prior_forecast/', include("main.urls"), name='prior_forecast'),
     path('', include("django.contrib.auth.urls")),
 ]

@@ -10,10 +10,43 @@
     {% block content %}
         {% if user.is_authenticated %}
             <h1>Observational Inquiry</h1>
-            <p>
-                Please enter below whether you wish to make an inquiry into hourly information or daily information?
-            </p>
-            <form action = "/storeval">
+            <div>
+              <p>
+                  On this page, you can make an inquiry into historic hourly information or historic daily information.
+              </p>
+              <p>
+                  Please enter the date or range of dates you would like to return weather data for (Jan 01 2021 - Jan 01 2022 format). There are two types of inquiries you can make: Hourly (observed hourly data) or Daily (observed daily data). If you want to inquire into a single date please select single. If you want to inquire into a range of observational data please select range. Additionally, please note that the earliest date you can inquire into is Jan 01 2019
+              </p>
+
+              <!-- Noah's original observational_inqury.html code is commented out at the bottom of this file.  The form code below was implemented by me (Devon) so that pulling user input data from the form could be done using Django's Forms  -->
+              
+              
+              <p> If you choose to inquire about a single day, you can ignore the "End date" and "End time" fields.</p>
+              <p>Similarly, if you indicate that you want daily information, ignore the last two fields that involve time.</p>
+  
+            </div>
+            
+            <div class="container" id="observation-parameters">
+
+                <form method = 'post' action = ''>
+                  {% csrf_token %}
+
+                  {{ form.as_p }}
+
+                  <button type="submit">Submit</button>
+                  <button type="reset">Reset</button>
+                </form>
+            </div>
+           
+        {% else %}
+            <a href="/login">Please login here to view the site.</a>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>
+
+<!-- Original observational_inqury.html code below (before Devon tampered with it...)
+<form action = "/storeval">
                 <label for="timetype">Choose hourly or daily</label>
                 <select name = " timetype " id = " timetype ">
                 <option value = "hourly">Hourly</option>
@@ -21,9 +54,7 @@
                 </select>
                 <br><br>
             </form>
-            <p>
-                Please enter the date or range of dates you would like to return weather data for (Jan 01 2021 - Jan 01 2022 format). If you want to inquire into a single date please select single. If you want to inquire into a range of observational data please select range. Additionally, please note that the earliest date you can inquire into is Jan 01 2019
-            </p>
+           
             <form action = "/storeval">
                 <label for="inqtype">Choose single or range</label>
                 <select name = "inqtype" id = "inqtype">
@@ -44,14 +75,7 @@
                 <input type="date" id="start" name="start"
                    value="2021-04-18"
                    min="2019-01-01">
-            </form>
+            </form> 
 
             <button type="button">Submit</button>
-            <button type="button">Return to homepage</button>
-
-        {% else %}
-            <a href="/login">Please login here to view the site.</a>
-        {% endif %}
-    {% endblock %}
-</body>
-</html>
+            <button type="button">Return to homepage</button> -->

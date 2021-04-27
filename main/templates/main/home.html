@@ -6,28 +6,185 @@
     <meta charset="UTF-8">
     <title>WeatherEyes</title>
 </head>
-
 <body>
-        {% block content %}
-            {% if user.is_authenticated %}
-                <h2>Welcome, {{ user.username}}!</h2>
-                <p>insert customized weather data here?</p>
-                <p><a href="{% url 'logout' %}">Log Out</a></p>
-
-                <body>
-                    <p> </p>
-                    <p> </p>
-                  </body>
-                  <form action="/preferences">
-                    <input type="submit" value="Update Preferences">
-                  </form>
-
-
-            {% else %}
-                <a href="/login">Please login here to view the site.</a>
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if datatype == None%}
+          <h2>Welcome, {{user.username}}!</h2>
+          <p>OH MY!! You have not set preferences yet -- use the button below to set your preferences before navigating weather data pages (the pages will be "under the weather" if you don't!).</p>
+        {%else%}
+        <h2>Welcome, {{user.username}}, here is your {{datatype}}!</h2>
+        {%endif%}
+        {% if display == None %}
+          <p>There is no data to display at this time. </p>
+        {% else %}
+          {% if datatype == 'Weather Observations'%}
+            {% if Timeframe == 'Hourly'%}
+                  <h6> Date: {{display.Date}}</h6>
+                  <p>Temperature: {{display.Temp}} </p>
+                  <p>Precipitation: {{display.Precipitation}} </p>
+                  <br>
+            {% elif Timeframe == 'Daily'%}
+                  <h6> Date: {{display.Date}}</h6>
+                  <p>High Temperature: {{display.High}} </p>
+                  <p>Low Temperature: {{display.Low}} </p>
+                  <p>Rainfall: {{display.Rainfall}} </p>
+                  <p>Snowfall: {{display.Snowfall}} </p>
+                  <br>
+            {%else%}
+              <p>Uh Oh! Something went wrong!</p>
             {% endif %}
-        {% endblock %}
+          {% elif datatype == 'Prior Forecast'%}
+            {% if provider == 'NatWeather'%}
+              {% if Timeframe == 'Hourly'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <h6> Hour: {{d.Hour}}</h6>
+                  <p>Temperature: {{d.Temperature}} </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {% elif Timeframe == 'Daily'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <p>Minimum Temp: {{d.MinTemp}} </p>
+                  <p>Maximum Temp: {{d.MaxTemp}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {%else%}
+                <p>Uh Oh! Something went wrong!</p>
+              {% endif %}
+            {%elif provider == 'AccuWeather'%}
+              <p> HEERE </p>
+              {% if Timeframe == 'Hourly'%}
+                <p> HEERE </p>
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <h6> Hour: {{d.Hour}}</h6>
+                  <p>Temperature: {{d.Temperature}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {% elif Timeframe == 'Daily'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <p>Minimum Temp: {{d.MinTemp}} </p>
+                  <p>Maximum Temp: {{d.MaxTemp}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {%else%}
+                <p>Uh Oh! Something went wrong!</p>
+              {% endif %}
+            {%elif provider == 'WeatherCom'%}
+              {% if Timeframe == 'Hourly'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <h6> Hour: {{d.Hour}}</h6>
+                  <p>Temperature: {{d.Temperature}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                  {% endfor %}
+              {% elif Timeframe == 'Daily'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <p>Minimum Temp: {{d.MinTemp}} </p>
+                  <p>Maximum Temp: {{d.MaxTemp}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {%else%}
+                <p>Uh Oh! Something went wrong!</p>
+              {% endif %}
+            {%else%}
+              <p>Uh Oh! Something went wrong!</p>
+            {% endif %}
+          {% elif datatype == 'Forecast' %}
+            {% if provider == 'NatWeather'%}
+              {% if Timeframe == 'Hourly'%}
+                {% for d in display %}
+                  <h6> Hour: {{d.Hour}}</h6>
+                  <p>Temperature: {{d.Temperature}} </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {% elif Timeframe == 'Daily'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <p>Minimum Temp: {{d.MinTemp}} </p>
+                  <p>Maximum Temp: {{d.MaxTemp}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {%else%}
+                <p>Uh Oh! Something went wrong!</p>
+              {% endif %}
+            {% elif provider == 'AccuWeather'%}
+              {% if Timeframe == 'Hourly'%}
+                {% for d in display %}
+                  <h6> Hour: {{d.Hour}}</h6>
+                  <p>Temperature: {{d.Temperature}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {% elif Timeframe == 'Daily'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <p>Minimum Temp: {{d.MinTemp}} </p>
+                  <p>Maximum Temp: {{d.MaxTemp}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {%else%}
+                <p>Uh Oh! Something went wrong!</p>
+              {% endif %}
+            {%elif provider == 'WeatherCom'%}
+              {% if Timeframe == 'Hourly'%}
+                {% for d in display %}
+                  <h6> Hour: {{d.Hour}}</h6>
+                  <p>Temperature: {{d.Temperature}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                  {% endfor %}
+              {% elif Timeframe == 'Daily'%}
+                {% for d in display %}
+                  <h6> Date: {{d.Date}}</h6>
+                  <p>Minimum Temp: {{d.MinTemp}} </p>
+                  <p>Maximum Temp: {{d.MaxTemp}} </p>
+                  <p>Percipitation: {{d.Precipitation_Probability}} <span>&#37;</span> </p>
+                  <p>Description: {{d.Description}} </p>
+                  <br>
+                {% endfor %}
+              {%else%}
+                <p>Uh Oh! Something went wrong!</p>
+              {% endif %}
+            {%else%}
+              <p>Uh Oh! Something went wrong!</p>
+            {% endif %}
+          {% else %}
+            <p>Uh Oh! Something went wrong!</p>
+          {% endif %}
+        {% endif %}
+      
+        
+          <form action="/preferences">
+            <input type="submit" value="Update Preferences">
+          </form>
+            <p><a href="{% url 'logout' %}">Log Out</a></p>
 
 
-</body>
-</html>
+    {% else %}
+        <a href="/login">Please login here to view the site.</a>
+    {% endif %}
+{% endblock %}
+
